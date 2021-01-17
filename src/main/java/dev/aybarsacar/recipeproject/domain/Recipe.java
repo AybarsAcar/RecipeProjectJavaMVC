@@ -1,5 +1,7 @@
 package dev.aybarsacar.recipeproject.domain;
 
+import dev.aybarsacar.recipeproject.domain.enums.Difficulty;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,7 +24,8 @@ public class Recipe
   private String url;
   private String directions;
 
-//  TODO: add difficulty
+  @Enumerated(value = EnumType.STRING)  // so stored as a string
+  private Difficulty difficulty;
 
   @Lob    // so it creates the field as blob in the db
   private Byte[] image; // not good, better to add a url and an external storage like Amazon S#
@@ -35,6 +38,12 @@ public class Recipe
 //  recipe is the target property in the Ingredient class
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
   private Set<Ingredient> ingredients;
+
+  @ManyToMany
+  @JoinTable(name = "recipe_category",
+      joinColumns = @JoinColumn(name = "recipe_id"),
+      inverseJoinColumns = @JoinColumn(name = "category_id"))
+  private Set<Category> categories;
 
   public Long getId()
   {
@@ -144,5 +153,25 @@ public class Recipe
   public void setNotes(Notes notes)
   {
     this.notes = notes;
+  }
+
+  public Set<Category> getCategories()
+  {
+    return categories;
+  }
+
+  public void setCategories(Set<Category> categories)
+  {
+    this.categories = categories;
+  }
+
+  public Difficulty getDifficulty()
+  {
+    return difficulty;
+  }
+
+  public void setDifficulty(Difficulty difficulty)
+  {
+    this.difficulty = difficulty;
   }
 }
