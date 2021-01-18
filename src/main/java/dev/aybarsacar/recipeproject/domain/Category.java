@@ -1,5 +1,7 @@
 package dev.aybarsacar.recipeproject.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,6 +9,7 @@ import java.util.Set;
  * This class represents the categories
  * has a many to many relationship with the Recipe Entity
  */
+@Data
 @Entity
 public class Category
 {
@@ -18,34 +21,4 @@ public class Category
 
   @ManyToMany(mappedBy = "categories")
   private Set<Recipe> recipes;
-
-  public Long getId()
-  {
-    return id;
-  }
-
-  public void setId(Long id)
-  {
-    this.id = id;
-  }
-
-  public String getDescription()
-  {
-    return description;
-  }
-
-  public void setDescription(String description)
-  {
-    this.description = description;
-  }
-
-  public Set<Recipe> getRecipes()
-  {
-    return recipes;
-  }
-
-  public void setRecipes(Set<Recipe> recipes)
-  {
-    this.recipes = recipes;
-  }
 }

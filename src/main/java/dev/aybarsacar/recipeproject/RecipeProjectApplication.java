@@ -4,12 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RecipeprojectApplication
+public class RecipeProjectApplication
 {
 
   public static void main(String[] args)
   {
-    SpringApplication.run(RecipeprojectApplication.class, args);
+    SpringApplication.run(RecipeProjectApplication.class, args);
   }
 
 }

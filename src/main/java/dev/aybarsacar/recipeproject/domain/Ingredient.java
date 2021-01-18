@@ -1,8 +1,11 @@
 package dev.aybarsacar.recipeproject.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Data
 @Entity
 public class Ingredient
 {
@@ -21,53 +24,22 @@ public class Ingredient
   @ManyToOne
   private Recipe recipe;
 
-  public Long getId()
+  public Ingredient()
   {
-    return id;
   }
 
-  public void setId(Long id)
-  {
-    this.id = id;
-  }
-
-  public String getDescription()
-  {
-    return description;
-  }
-
-  public void setDescription(String description)
+  public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure)
   {
     this.description = description;
-  }
-
-  public UnitOfMeasure getUnitOfMeasure()
-  {
-    return unitOfMeasure;
-  }
-
-  public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure)
-  {
+    this.amount = amount;
     this.unitOfMeasure = unitOfMeasure;
   }
 
-  public BigDecimal getAmount()
+  public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure, Recipe recipe)
   {
-    return amount;
-  }
-
-  public void setAmount(BigDecimal amount)
-  {
+    this.description = description;
     this.amount = amount;
-  }
-
-  public Recipe getRecipe()
-  {
-    return recipe;
-  }
-
-  public void setRecipe(Recipe recipe)
-  {
+    this.unitOfMeasure = unitOfMeasure;
     this.recipe = recipe;
   }
 }
