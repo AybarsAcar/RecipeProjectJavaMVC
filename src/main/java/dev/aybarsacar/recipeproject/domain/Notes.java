@@ -9,6 +9,7 @@ import javax.persistence.*;
  * uses project Lombok Data for its getter setter toString equalsAndHashCode and requiredArgsConstructor
  */
 @Data
+@EqualsAndHashCode(exclude = {"recipe"})   // to avoid circular reference error
 @Entity
 public class Notes
 {

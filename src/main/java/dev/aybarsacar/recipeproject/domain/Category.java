@@ -10,6 +10,7 @@ import java.util.Set;
  * has a many to many relationship with the Recipe Entity
  */
 @Data
+@EqualsAndHashCode(exclude = {"recipes"})   // to avoid circular reference error
 @Entity
 public class Category
 {
