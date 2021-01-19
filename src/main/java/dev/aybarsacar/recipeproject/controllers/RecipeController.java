@@ -1,11 +1,13 @@
 package dev.aybarsacar.recipeproject.controllers;
 
+import dev.aybarsacar.recipeproject.commands.RecipeCommand;
 import dev.aybarsacar.recipeproject.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 public class RecipeController
 {
@@ -16,11 +18,70 @@ public class RecipeController
     this.recipeService = recipeService;
   }
 
-  @RequestMapping("/recipe/show/{id}")
+  @GetMapping
+  @RequestMapping("/recipe/{id}/show")
   public String showById(@PathVariable String id, Model model)
   {
     model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
 
     return "recipe/show";
+  }
+
+  /**
+   * renders the view of the form
+   *
+   * @param model
+   * @return
+   */
+  @GetMapping
+  @RequestMapping("/recipe/new")
+  public String newRecipe(Model model)
+  {
+    model.addAttribute("recipe", new RecipeCommand());
+
+    return "recipe/recipeform";
+  }
+
+  /**
+   * this handles hte post request from the view layer
+   * we also use this to handle update as well
+   *
+   * @param command
+   * @return
+   */
+  @PostMapping
+  @RequestMapping("recipe")
+  public String saveOrUpdate(@ModelAttribute RecipeCommand command)
+  {
+    RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
+
+//    we will redirect the user
+    return "redirect:/";// + savedCommand.getId();
+  }
+
+  /**
+   * serve the update form
+   *
+   * @param id
+   * @param model
+   * @return
+   */
+  @GetMapping
+  @RequestMapping("recipe/{id}/update")
+  public String updateRecipe(@PathVariable String id, Model model)
+  {
+    model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
+
+    return "recipe/recipeform";
+  }
+
+  @GetMapping
+  @RequestMapping("recipe/{id}/delete")
+  public String deleteById(@PathVariable String id)
+  {
+    log.debug("Deleting id: " + id);
+
+    recipeService.deleteById(Long.valueOf(id));
+    return "redirect:/";
   }
 }

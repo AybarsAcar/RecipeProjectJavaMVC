@@ -72,4 +72,17 @@ class RecipeServiceImplTest
 //    Make sure the findAll() method on the Repository called only once
     verify(recipeRepository, times(1)).findAll();
   }
+
+  @Test
+  void testDeleteById() throws Exception
+  {
+//    given
+    Long idToDelete = 2L;
+    recipeService.deleteById(idToDelete);
+
+//    no when
+
+//    then
+    verify(recipeRepository, times(1)).deleteById(anyLong());
+  }
 }
